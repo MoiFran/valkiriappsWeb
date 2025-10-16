@@ -1,0 +1,98 @@
+.mision {
+  padding: 4rem 1rem;
+  max-width: 960px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  overflow: visible;
+  height: 100vh;
+  z-index: 1;
+}
+
+.header {
+  margin-bottom: 2.5rem;
+}
+
+.titleContainer {
+  margin-bottom: 1.5rem;
+  overflow: visible;
+  position: relative;
+  z-index: 10;
+}
+
+.titleContainer .scroll-float-text {
+  color: #00bfff;
+}
+
+.title {
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  color: #ccc;
+  margin-top: 0.75rem;
+  font-weight: 500;
+}
+
+.description {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: #eee;
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  line-height: 1.6;
+}
+
+.values {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  justify-items: center;
+  margin-top: 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.valueCard {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 280px;
+  box-sizing: border-box;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.valueCard:hover {
+  transform: translateY(-5px);
+}
+
+.valueCard h4 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #00bfff;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.valueCard p {
+  font-size: 0.95rem;
+  color: #ddd;
+  line-height: 1.4;
+}
+
+/* Canvas decorativo */
+.canvasArt {
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 0;
+}
