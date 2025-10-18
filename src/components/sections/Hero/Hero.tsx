@@ -1,10 +1,11 @@
-// src/app/components/Hero/Hero.tsx
+// src/components/sections/Hero/Hero.tsx
 "use client";
 
 import React from "react";
 import Threads from "./Threads";
 import styles from "./Hero.module.css";
 import Image from "next/image";
+import { HERO_ANIMATION_CONFIG, COMPANY_INFO } from "@/constants";
 
 export default function Hero() {
   return (
@@ -12,10 +13,10 @@ export default function Hero() {
       {/* Canvas WebGL */}
       <div className={styles.threadsWrapper}>
         <Threads
-       color={[0, 0.749, 1]}    // ese #00BFFF exacto
-          amplitude={3}
-          distance={0}
-          enableMouseInteraction={true}
+          color={HERO_ANIMATION_CONFIG.color}
+          amplitude={HERO_ANIMATION_CONFIG.amplitude}
+          distance={HERO_ANIMATION_CONFIG.distance}
+          enableMouseInteraction={HERO_ANIMATION_CONFIG.enableMouseInteraction}
         />
       </div>
 
@@ -24,8 +25,8 @@ export default function Hero() {
         {/* Logo */}
         <div className={styles.logoWrapper}>
   <Image
-    src="/img/valkiriapps_logo_electricBlue.svg"
-    alt="ValkiriApps Logo"
+    src="/images/logos/valkiriapps_logo_electricBlue.svg"
+    alt={`${COMPANY_INFO.name} Logo`}
     fill
     sizes="(max-width: 600px) 120px, (max-width: 1200px) 200px, 300px"
     style={{ objectFit: "contain" }}
@@ -33,8 +34,8 @@ export default function Hero() {
   />
 </div>
         {/* Texto opcional */}
-        <h1>Bienvenido a ValkiriApps</h1>
-        <p>Soluciones digitales </p>
+        <h1>Bienvenido a {COMPANY_INFO.name}</h1>
+        <p>{COMPANY_INFO.description}</p>
       </div>
     </section>
   );

@@ -1,26 +1,29 @@
-// src/app/components/ClientSmoothScroll.tsx
+// src/hooks/useSmoothScroll.ts
 "use client";
 
-import { useEffect, ReactNode } from "react";
+import { useEffect } from "react";
 import Lenis from "@studio-freight/lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface ClientSmoothScrollProps {
-  children: ReactNode;
+interface SmoothScrollOptions {
+  duration?: number;
+  easing?: (t: number) => number;
 }
 
-export default function ClientSmoothScroll({ children }: ClientSmoothScrollProps) {
+export function useSmoothScroll(options: SmoothScrollOptions = {}) {
   useEffect(() => {
-    // 1. Inicializa Lenis para scroll suave con inercia
+    const { duration = 1.2, easing = (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) } = options;
+
+    // Initialize Lenis for smooth scrolling with inertia
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration,
+      easing,
     });
 
-    // 2. Bucle RAF: lenis.raf + ScrollTrigger.update
+    // RAF loop: lenis.raf + ScrollTrigger.update
     function raf(time: number) {
       lenis.raf(time);
       ScrollTrigger.update();
@@ -28,7 +31,7 @@ export default function ClientSmoothScroll({ children }: ClientSmoothScrollProps
     }
     requestAnimationFrame(raf);
 
-    // 3. Proxy para que GSAP use Lenis como scroller
+    // Proxy for GSAP to use Lenis as scroller
     ScrollTrigger.scrollerProxy(document.body, {
       scrollTop(value) {
         if (value !== undefined) {
@@ -42,15 +45,14 @@ export default function ClientSmoothScroll({ children }: ClientSmoothScrollProps
       pinType: document.body.style.transform ? "transform" : "fixed",
     });
 
-    // 4. Refresca ScrollTrigger al redimensionar lenis
+    // Refresh ScrollTrigger when lenis resizes
     ScrollTrigger.addEventListener("refresh", () => lenis.resize());
     ScrollTrigger.refresh();
 
-    // Cleanup en unmount
+    // Cleanup on unmount
     return () => {
       ScrollTrigger.removeEventListener("refresh", () => lenis.resize());
+      lenis.destroy();
     };
-  }, []);
-
-  return <>{children}</>;
+  }, [options]);
 }

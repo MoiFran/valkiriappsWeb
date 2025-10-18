@@ -1,8 +1,7 @@
 import React from "react";
-import NavBar from "@/app/components/Navbar/NavBar";
-import Hero from "@/app/components/Hero/Hero";
-import "@/app/globals.css";
-import Mision from "./components/Mision/Mision";
+import NavBar from "@/components/layout/Navbar/NavBar";
+import Hero from "@/components/sections/Hero/Hero";
+import Mision from "@/components/sections/Mision/Mision";
 
 export default function Home() {
   return (
