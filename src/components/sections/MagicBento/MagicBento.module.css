@@ -1,0 +1,369 @@
+/* Epic MagicBento - Redesigned */
+
+.bentoSection {
+  --glow-x: 50%;
+  --glow-y: 50%;
+  --glow-intensity: 0;
+  --glow-radius: 400px;
+  --glow-color: 79, 194, 209;
+  --border-color: rgba(79, 194, 209, 0.2);
+  --background-dark: #000;
+  --white: hsl(0, 0%, 100%);
+
+  position: relative;
+  padding: 8rem 2rem;
+  background: #000;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.bentoSection::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(79, 194, 209, 0.8) 50%, transparent 100%);
+}
+
+/* Card Responsive Grid */
+.cardResponsive {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  perspective: 2000px;
+}
+
+@media (min-width: 768px) {
+  .cardResponsive {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .cardResponsive {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Card Base - EPIC REDESIGN */
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  aspect-ratio: 1/1;
+  min-height: 350px;
+  padding: 2.5rem;
+  border-radius: 2rem;
+  border: 2px solid var(--border-color);
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(20, 20, 20, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(79, 194, 209, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.card:hover::before {
+  opacity: 1;
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.card:hover {
+  transform: translateY(-20px) scale(1.05);
+  border-color: rgba(79, 194, 209, 0.6);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.6),
+    0 0 100px rgba(79, 194, 209, 0.4),
+    inset 0 0 80px rgba(79, 194, 209, 0.05);
+}
+
+/* Card with Border Glow - ENHANCED */
+.cardBorderGlow::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  padding: 2px;
+  background: radial-gradient(
+    var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+    rgba(79, 194, 209, calc(var(--glow-intensity) * 0.9)) 0%,
+    rgba(125, 249, 255, calc(var(--glow-intensity) * 0.6)) 20%,
+    rgba(79, 194, 209, calc(var(--glow-intensity) * 0.3)) 40%,
+    transparent 70%
+  );
+  border-radius: inherit;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+  opacity: 0.8;
+  transition: opacity 0.4s ease;
+  z-index: 10;
+}
+
+.cardBorderGlow:hover::after {
+  opacity: 1;
+}
+
+/* Card Header - MODERN DESIGN */
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  position: relative;
+  z-index: 5;
+}
+
+.cardLabel {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #4fc2d1 0%, #7df9ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(79, 194, 209, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+/* Card Content - ENHANCED */
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  z-index: 5;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.cardTitle {
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin: 0;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cardDescription {
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+/* Text Clamping */
+.textClamp1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.textClamp2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Particle Container - ENHANCED */
+.particleContainer {
+  position: relative;
+  overflow: hidden;
+}
+
+.particleContainer:hover {
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 80px rgba(79, 194, 209, 0.3);
+}
+
+/* Section Header */
+.sectionHeader {
+  position: relative;
+  z-index: 20;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 4rem;
+  padding: 0 2rem;
+}
+
+.sectionTitle {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  margin: 0 0 1.5rem;
+  background: linear-gradient(135deg, #4fc2d1 0%, #7df9ff 50%, #fff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.sectionDescription {
+  font-size: clamp(1.125rem, 2vw, 1.25rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+/* CTA Section */
+.ctaSection {
+  text-align: center;
+  margin-top: 4rem;
+  padding: 4rem 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ctaText {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 2rem;
+  line-height: 1.4;
+}
+
+.ctaButton {
+  display: inline-block;
+  padding: 1.25rem 3rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #000;
+  background: linear-gradient(135deg, #4fc2d1 0%, #7df9ff 100%);
+  border: none;
+  border-radius: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow:
+    0 10px 30px rgba(79, 194, 209, 0.3),
+    0 0 40px rgba(79, 194, 209, 0.2);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.ctaButton::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%
+  );
+  transform: rotate(45deg);
+  transition: all 0.6s ease;
+}
+
+.ctaButton:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow:
+    0 20px 50px rgba(79, 194, 209, 0.5),
+    0 0 60px rgba(79, 194, 209, 0.4);
+}
+
+.ctaButton:hover::before {
+  left: 100%;
+}
+
+.ctaButton:active {
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* Mobile Responsive */
+@media (max-width: 767px) {
+  .bentoSection {
+    padding: 6rem 1.5rem;
+  }
+
+  .cardResponsive {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+
+  .card {
+    min-height: 300px;
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    min-height: 280px;
+    padding: 1.5rem;
+  }
+}
+
+/* Performance optimizations */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .cardBorderGlow::after {
+    transition: none;
+  }
+
+  .card::before {
+    animation: none;
+  }
+}

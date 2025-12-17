@@ -35,3 +35,11 @@ export interface CompanyInfo {
   description: string;
   mission: string;
 }
+
+export interface Service {
+  id: string;
+  title: string;
+  description: string;
+  features: readonly string[];
+  color: string;
+}

@@ -1,66 +1,455 @@
-/* Hero.module.css */
+/* Hero.module.css - EPIC VANGUARD (Fixed: <=100vh + Responsive + Mobile-safe) */
+
 .hero {
   position: relative;
   width: 100%;
-  background: #000;
-  min-height: 400px;
-  height: 100vh;
-  overflow: hidden;
+
+  /* <= 100vh real (mobile-safe) */
+  height: 100dvh;
+  max-height: 100vh;
 
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* alineado arriba */
-  padding-top: 2rem;            /* espacio tras el NavBar */
+  justify-content: center;
+
+  overflow: hidden;
+  background: #000;
+  perspective: 2000px;
 }
 
-.threadsWrapper {
+/* Background layers */
+.ballpitWrapper,
+.splashWrapper {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  
-  z-index: 1;
 }
 
-.threadsWrapper canvas {
+.ballpitWrapper {
+  z-index: 1;
+  opacity: 0.35;
+}
+
+.splashWrapper {
+  z-index: 2;
+  opacity: 0.25;
+  mix-blend-mode: screen;
   pointer-events: none;
 }
 
+/* Content */
 .content {
   position: relative;
-  z-index: 2;
+  z-index: 10;
+  text-align: center;
+
+  width: min(1400px, 100%);
+  margin: 0 auto;
+
+  /* padding + gap fluidos para no reventar el alto */
+  padding: clamp(1rem, 3vw, 2rem);
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* ya no justificamos verticalmente, heredamos padding-top del .hero */
-  text-align: center;
-  padding: 0 1.5rem;
-  gap: 1rem;
+  gap: clamp(1.25rem, 2.5vw, 3rem);
+
+  transform-style: preserve-3d;
+
+  /* Si el contenido crece, que no “rompa” el 100vh */
+  max-height: 100%;
+  overflow: hidden;
 }
 
-.content h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
-  margin: 0;
-  line-height: 1.1;
-}
-
-.content p {
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-  margin: 0;
-}
-
-
-
-
+/* 3D Logo */
 .logoWrapper {
   position: relative;
-  width: clamp(50%, 30vw, 50%);
-  aspect-ratio: 1/1;
-  margin-bottom: 1rem;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 0 50px rgba(79, 194, 209, 0.75))
+    drop-shadow(0 0 110px rgba(79, 194, 209, 0.35));
+}
 
-  /* Aplico la animación */
-  animation: float 4s ease-in-out infinite;
-  /* opcional: suaviza la animación */
-  transform-origin: center bottom;
+.logo {
+  width: auto;
+  height: auto;
+  max-width: clamp(180px, 28vw, 400px);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Title */
+.titleWrapper {
+  perspective: 1500px;
+}
+
+.mainTitle {
+  font-size: clamp(2rem, 7vw, 6rem);
+  font-weight: 900;
+  line-height: 0.98;
+  margin: 0;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  transform-style: preserve-3d;
+}
+
+.word {
+  display: inline-block;
+  background: linear-gradient(
+    135deg,
+    #4fc2d1 0%,
+    #7df9ff 25%,
+    #00bfff 50%,
+    #7df9ff 75%,
+    #4fc2d1 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  animation: shimmer 8s linear infinite;
+
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  text-shadow: 0 0 90px rgba(79, 194, 209, 0.45);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Rotating Words */
+.rotatingWords {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  margin: -0.75rem 0;
+}
+
+.rotatingLabel {
+  font-size: clamp(0.75rem, 1.6vw, 1.05rem);
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  color: rgba(255, 255, 255, 0.55);
+  text-transform: uppercase;
+}
+
+.rotatingWord {
+  font-size: clamp(1.75rem, 5vw, 4rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #ff79c6 0%, #bd93f9 50%, #ffd700 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  letter-spacing: -0.02em;
+  min-height: 1.15em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  will-change: transform, opacity;
+}
+
+/* Tagline container (si lo usas) */
+.taglineWrapper {
+  width: min(900px, 100%);
+  margin: 0 auto;
+}
+
+/* CTAs */
+.ctaWrapper {
+  display: flex;
+  gap: clamp(0.75rem, 2vw, 2rem);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.ctaPrimary,
+.ctaSecondary {
+  padding: clamp(0.95rem, 2.2vw, 1.5rem) clamp(1.6rem, 4vw, 3.5rem);
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  font-weight: 700;
+  border-radius: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+
+  position: relative;
+  overflow: hidden;
+
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.35s ease,
+    background 0.35s ease,
+    border-color 0.35s ease;
+
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+
+  will-change: transform;
+}
+
+.ctaPrimary {
+  background: rgba(79, 194, 209, 0.2);
+  color: #fff;
+  border: 2px solid rgba(79, 194, 209, 0.5);
+  box-shadow:
+    0 0 36px rgba(79, 194, 209, 0.28),
+    0 10px 30px rgba(0, 0, 0, 0.28);
+}
+
+.ctaSecondary {
+  background: rgba(125, 249, 255, 0.15);
+  color: #fff;
+  border: 2px solid rgba(125, 249, 255, 0.4);
+  box-shadow:
+    0 0 34px rgba(125, 249, 255, 0.2),
+    0 10px 30px rgba(0, 0, 0, 0.28);
+}
+
+.ctaText {
+  position: relative;
+  z-index: 1;
+}
+.ctaIcon {
+  font-size: 1.5rem;
+  transition: transform 0.25s ease;
+}
+
+/* Hover (solo donde existe hover real) */
+@media (hover: hover) and (pointer: fine) {
+  .ctaPrimary:hover,
+  .ctaSecondary:hover {
+    transform: translateY(-6px) scale(1.04);
+  }
+
+  .ctaPrimary:hover {
+    box-shadow:
+      0 0 70px rgba(79, 194, 209, 0.55),
+      0 20px 60px rgba(0, 0, 0, 0.35);
+    border-color: #4fc2d1;
+    background: rgba(79, 194, 209, 0.3);
+  }
+
+  .ctaSecondary:hover {
+    box-shadow:
+      0 0 70px rgba(125, 249, 255, 0.48),
+      0 20px 60px rgba(0, 0, 0, 0.35);
+    border-color: #7df9ff;
+    background: rgba(125, 249, 255, 0.25);
+  }
+
+  .ctaPrimary:hover .ctaIcon,
+  .ctaSecondary:hover .ctaIcon {
+    transform: translateX(8px);
+  }
+}
+
+/* Stats */
+.stats {
+  display: flex;
+  gap: clamp(1rem, 3vw, 4rem);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: clamp(1rem, 2.3vw, 2rem);
+  border-radius: 1.25rem;
+
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid rgba(79, 194, 209, 0.4);
+  backdrop-filter: blur(24px);
+
+  cursor: default;
+  min-width: 160px;
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.45),
+    inset 0 0 36px rgba(79, 194, 209, 0.1);
+
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease,
+    background 0.35s ease;
+
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .stat:hover {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: rgba(79, 194, 209, 0.75);
+    transform: translateY(-10px) scale(1.06);
+    box-shadow:
+      0 20px 60px rgba(79, 194, 209, 0.35),
+      0 0 80px rgba(79, 194, 209, 0.18),
+      inset 0 0 52px rgba(79, 194, 209, 0.14);
+  }
+}
+
+.statNumber {
+  font-size: clamp(2.25rem, 6vw, 5rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #4fc2d1 0%, #7df9ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1;
+  filter: drop-shadow(0 0 18px rgba(79, 194, 209, 0.45));
+}
+
+.statLabel {
+  font-size: clamp(0.7rem, 1.4vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+}
+
+/* Scroll Indicator (sin romper el alto) */
+.scrollIndicator {
+  position: absolute;
+  bottom: clamp(1.25rem, 3vw, 3rem);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  opacity: 0.8;
+  transition: opacity 0.25s ease;
+  z-index: 20;
+  pointer-events: none; /* evita taps raros */
+}
+
+.scrollIndicator:hover {
+  opacity: 1;
+}
+
+.scrollLine {
+  width: 2px;
+  height: clamp(28px, 6vw, 60px);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(79, 194, 209, 0.8) 50%,
+    transparent 100%
+  );
+  animation: lineMove 2s ease-in-out infinite;
+}
+
+@keyframes lineMove {
+  0%,
+  100% {
+    transform: scaleY(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scaleY(1.4);
+    opacity: 1;
+  }
+}
+
+.scrollText {
+  font-size: 0.825rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+}
+
+.scrollArrow {
+  font-size: 1.9rem;
+  color: #4fc2d1;
+  animation: arrowBounce 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 18px rgba(79, 194, 209, 0.55));
+}
+
+@keyframes arrowBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(12px);
+  }
+}
+
+/* Breakpoints */
+@media (max-width: 1024px) {
+  .content {
+    gap: clamp(1.1rem, 2.2vw, 2rem);
+  }
+  .stat {
+    min-width: 140px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ctaWrapper {
+    flex-direction: column;
+    width: min(360px, 100%);
+    gap: 1rem;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    width: 100%;
+  }
+
+  .stats {
+    gap: 1rem;
+  }
+  .stat {
+    min-width: 0;
+    width: min(280px, 100%);
+  }
+}
+
+/* Pantallas MUY bajas (móvil horizontal): evita que el Hero “se coma” todo */
+@media (max-height: 680px) {
+  .content {
+    gap: 1rem;
+  }
+  .rotatingWords {
+    margin: -0.4rem 0;
+  }
+  .scrollIndicator {
+    display: none;
+  } /* aquí sí molesta más de lo que aporta */
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .word,
+  .scrollLine,
+  .scrollArrow {
+    animation: none !important;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary,
+  .stat {
+    transition: none !important;
+  }
 }

@@ -1,0 +1,77 @@
+/* Contenedor principal */
+.container {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 2rem 1rem;
+  min-height: 100px;
+}
+
+/* Palabra individual */
+.word {
+  position: relative;
+  font-size: 1em;
+  font-weight: 900;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  color: inherit;
+  transition: filter 0.3s ease;
+}
+
+/* Contenedor del borde de enfoque */
+.focusBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  box-sizing: border-box;
+  border: 0;
+}
+
+/* Estilos base de las esquinas */
+.corner {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border-width: 3px;
+  border-style: solid;
+  border-color: var(--border-color);
+  border-radius: 3px;
+  filter: drop-shadow(0 0 4px var(--border-color));
+}
+
+/* Esquina superior izquierda */
+.cornerTopLeft {
+  top: -10px;
+  left: -10px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+/* Esquina superior derecha */
+.cornerTopRight {
+  top: -10px;
+  right: -10px;
+  border-left: 0;
+  border-bottom: 0;
+}
+
+/* Esquina inferior izquierda */
+.cornerBottomLeft {
+  bottom: -10px;
+  left: -10px;
+  border-right: 0;
+  border-top: 0;
+}
+
+/* Esquina inferior derecha */
+.cornerBottomRight {
+  bottom: -10px;
+  right: -10px;
+  border-left: 0;
+  border-top: 0;
+}

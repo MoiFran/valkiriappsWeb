@@ -1,0 +1,17 @@
+/* Quick fix for all modal overlays */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+  padding: 2rem 1rem;
+  display: block !important;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.modal {
+  margin: 0 auto 2rem !important;
+  position: relative;
+}

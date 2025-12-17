@@ -1,14 +1,17 @@
-// src/app/components/Mision/ScrollFloat.tsx
-import React, { useEffect, useMemo, useRef } from "react";
+"use client";
+
+import React, { useEffect, useMemo, useRef, ReactNode, RefObject } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import "./ScrollFloat.css";
 
-gsap.registerPlugin(ScrollTrigger);
+// Registrar plugin
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface ScrollFloatProps {
-  children: string;                   // forzamos string
-  scrollContainerRef?: React.RefObject<unknown>;
+  children: ReactNode;
+  scrollContainerRef?: RefObject<HTMLElement>;
   containerClassName?: string;
   textClassName?: string;
   animationDuration?: number;
@@ -25,22 +28,17 @@ const ScrollFloat: React.FC<ScrollFloatProps> = ({
   textClassName = "",
   animationDuration = 1,
   ease = "back.inOut(2)",
-  scrollStart = "top bottom-=100px",
+  scrollStart = "center bottom+=50%",
   scrollEnd = "bottom bottom-=40%",
-  stagger = 0.05,
+  stagger = 0.03,
 }) => {
   const containerRef = useRef<HTMLHeadingElement>(null);
 
-  // Spliteamos palabra a palabra en lugar de caracter a caracter
   const splitText = useMemo(() => {
-    return children.split(" ").map((word, wi) => (
-      <span className="word" key={wi}>
-        {word.split("").map((char, i) => (
-          <span className="char" key={i}>
-            {char}
-          </span>
-        ))}
-        {wi < children.split(" ").length - 1 && <span> </span>}
+    const text = typeof children === "string" ? children : "";
+    return text.split("").map((char, index) => (
+      <span className="inline-block" key={index} style={{ display: "inline-block" }}>
+        {char === " " ? "\u00A0" : char}
       </span>
     ));
   }, [children]);
@@ -49,43 +47,65 @@ const ScrollFloat: React.FC<ScrollFloatProps> = ({
     const el = containerRef.current;
     if (!el) return;
 
-    const scroller = scrollContainerRef?.current instanceof HTMLElement ? scrollContainerRef.current : window;
-    const chars = el.querySelectorAll(".char");
+    const scroller =
+      scrollContainerRef && scrollContainerRef.current ? scrollContainerRef.current : undefined;
+    const charElements = el.querySelectorAll(".inline-block");
 
-    gsap.fromTo(
-      chars,
-      {
-        opacity: 0,
-        yPercent: 120,
-        scaleY: 2.3,
-        scaleX: 0.7,
-        transformOrigin: "50% 0%",
-      },
-      {
-        opacity: 1,
-        yPercent: 0,
-        scaleY: 1,
-        scaleX: 1,
-        duration: animationDuration,
-        ease,
-        stagger,
-        scrollTrigger: {
-          trigger: el,
-          scroller,
-          start: scrollStart,
-          end: scrollEnd,
-          scrub: 1,          // <- suaviza el scrub con 1s de “inercia”
-        },
+    if (charElements.length === 0) return;
+
+    const ctx = gsap.context(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const scrollTriggerConfig: any = {
+        trigger: el,
+        start: scrollStart,
+        end: scrollEnd,
+        scrub: true,
+        markers: false, // Cambiar a true para debug
+      };
+
+      // Only set scroller if explicitly provided
+      if (scroller) {
+        scrollTriggerConfig.scroller = scroller;
       }
-    );
-  }, [animationDuration, ease, scrollStart, scrollEnd, stagger, scrollContainerRef]);
+
+      gsap.fromTo(
+        charElements,
+        {
+          willChange: "opacity, transform",
+          opacity: 0,
+          yPercent: 120,
+          scaleY: 2.3,
+          scaleX: 0.7,
+          transformOrigin: "50% 0%",
+        },
+        {
+          duration: animationDuration,
+          ease: ease,
+          opacity: 1,
+          yPercent: 0,
+          scaleY: 1,
+          scaleX: 1,
+          stagger: stagger,
+          scrollTrigger: scrollTriggerConfig,
+        }
+      );
+    }, el);
+
+    return () => ctx.revert();
+  }, [scrollContainerRef, animationDuration, ease, scrollStart, scrollEnd, stagger]);
 
   return (
     <h2
       ref={containerRef}
-      className={`scroll-float ${containerClassName}`}
+      className={`my-5 ${containerClassName}`}
+      style={{ overflow: "visible", position: "relative", zIndex: 1 }}
     >
-      <span className={`scroll-float-text ${textClassName}`}>{splitText}</span>
+      <span
+        className={`inline-block leading-[1.5] ${textClassName}`}
+        style={{ display: "inline-block", position: "relative" }}
+      >
+        {splitText}
+      </span>
     </h2>
   );
 };

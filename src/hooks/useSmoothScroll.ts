@@ -15,12 +15,21 @@ interface SmoothScrollOptions {
 
 export function useSmoothScroll(options: SmoothScrollOptions = {}) {
   useEffect(() => {
-    const { duration = 1.2, easing = (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) } = options;
+    const { duration = 1.8, easing = (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) } =
+      options;
 
     // Initialize Lenis for smooth scrolling with inertia
     const lenis = new Lenis({
       duration,
       easing,
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 2.0,
+      infinite: false,
+      // Optimize for better performance
+      autoResize: true,
+      syncTouch: true,
+      syncTouchLerp: 0.1,
     });
 
     // RAF loop: lenis.raf + ScrollTrigger.update
@@ -35,7 +44,12 @@ export function useSmoothScroll(options: SmoothScrollOptions = {}) {
     ScrollTrigger.scrollerProxy(document.body, {
       scrollTop(value) {
         if (value !== undefined) {
-          return lenis.scrollTo(value, { immediate: true });
+          // FIXED: Remove immediate: true to preserve inertia
+          lenis.scrollTo(value, {
+            duration: 0.8,
+            easing: (t: number) => 1 - Math.pow(1 - t, 3),
+          });
+          return lenis.scroll;
         }
         return lenis.scroll;
       },
@@ -46,13 +60,15 @@ export function useSmoothScroll(options: SmoothScrollOptions = {}) {
     });
 
     // Refresh ScrollTrigger when lenis resizes
-    ScrollTrigger.addEventListener("refresh", () => lenis.resize());
+    const handleRefresh = () => lenis.resize();
+    ScrollTrigger.addEventListener("refresh", handleRefresh);
     ScrollTrigger.refresh();
 
     // Cleanup on unmount
     return () => {
-      ScrollTrigger.removeEventListener("refresh", () => lenis.resize());
+      ScrollTrigger.removeEventListener("refresh", handleRefresh);
       lenis.destroy();
+      ScrollTrigger.clearScrollMemory();
     };
   }, [options]);
 }

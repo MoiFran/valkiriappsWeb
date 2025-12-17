@@ -1,138 +1,169 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import ScrollFloat from "./ScrollFloat";
+import { ElectricBorder, SplitText } from "@/components/ui";
 import styles from "./Mision.module.css";
 
 const valores = [
   {
     titulo: "Innovación constante",
     descripcion:
-      "Siempre exploramos nuevas tecnologías para ofrecer soluciones avanzadas y efectivas."
+      "Siempre exploramos nuevas tecnologías para ofrecer soluciones avanzadas y efectivas.",
+    icon: "⚡",
+    color: "#00BFFF", // Electric Blue
   },
   {
     titulo: "Calidad y detalle",
-    descripcion:
-      "Cada línea de código y diseño refleja nuestro compromiso con la excelencia."
+    descripcion: "Cada línea de código y diseño refleja nuestro compromiso con la excelencia.",
+    icon: "💎",
+    color: "#4FC2D1", // Teal
   },
   {
     titulo: "Orientación al cliente",
-    descripcion:
-      "Escuchamos, entendemos y construimos con base en tus objetivos reales."
+    descripcion: "Escuchamos, entendemos y construimos con base en tus objetivos reales.",
+    icon: "🎯",
+    color: "#9D4EDD", // Purple
   },
   {
     titulo: "Tecnologías de vanguardia",
-    descripcion:
-      "React, Vite, OpenRouter, IA: usamos lo último para construir lo próximo."
-  }
+    descripcion: "React, Vite, OpenRouter, IA: usamos lo último para construir lo próximo.",
+    icon: "🚀",
+    color: "#06FFA5", // Neon Green
+  },
 ];
 
-export default function Mision() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    canvas.width = window.innerWidth;
-    canvas.height = 200;
-
-    let mouseX = canvas.width / 2;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX = e.clientX;
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    function draw() {
-      if (!ctx || !canvas) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = 0; i < 80; i++) {
-        const x = Math.sin(Date.now() * 0.001 + i) * 100 + mouseX;
-        const y = i * 2 + Math.sin(i + Date.now() * 0.002) * 10;
-        ctx.beginPath();
-        ctx.arc(x, y, 1.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0, 191, 255, ${1 - i / 80})`;
-        ctx.fill();
-      }
-      requestAnimationFrame(draw);
-    }
-
-    draw();
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
+// Componente individual de Card con efectos inmersivos (OPTIMIZADO)
+const ValueCard = React.memo(({ valor, index }: { valor: (typeof valores)[0]; index: number }) => {
+  // Remove expensive scroll-based transforms for better performance
+  const cardRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section className={styles.mision} id="mision">
-      <header className={styles.header}>
-        <ScrollFloat
-          containerClassName={styles.titleContainer}
-          textClassName={styles.title}
-          animationDuration={1.1}
-          ease="power3.out"
-          scrollStart="top 80%"
-          scrollEnd="bottom 20%"
-          stagger={0.05}
-        >
-          Nuestra Misión
-        </ScrollFloat>
-
-        <motion.h3
-          className={styles.subtitle}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
-        >
-          Hacer realidad tu visión es nuestra misión.
-        </motion.h3>
-      </header>
-
-      <motion.p
-        className={styles.description}
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{
+        duration: 0.6,
+        delay: 0.1 + index * 0.1,
+        ease: [0.25, 0.4, 0.25, 1],
+      }}
+      whileHover={{
+        scale: 1.05,
+        y: -5,
+        transition: { duration: 0.3, ease: "easeOut" },
+      }}
+      className={styles.valueCardWrapper}
+      style={{ willChange: "transform" }}
+    >
+      <ElectricBorder
+        color={valor.color}
+        speed={1.2}
+        chaos={0.8}
+        thickness={2}
+        className={styles.electricBorderCard}
+        style={{ borderRadius: 16 }}
       >
-        En ValkiriApps diseñamos soluciones digitales inteligentes, impulsadas por IA y tecnología moderna, para transformar ideas en productos que impactan. Nuestra misión es acompañarte en cada paso, desde la conceptualización hasta la ejecución técnica.
-      </motion.p>
-
-      <ul className={styles.values}>
-        {valores.map((valor, i) => (
-          <motion.li
-            key={i}
-            className={`${styles.valueCard} ${i % 2 === 0 ? styles.left : styles.right}`}
-            initial={{ opacity: 0, x: i % 2 === 0 ? -100 : 100 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{
-              duration: 0.7,
-              delay: 0.4 + i * 0.2,
-              type: "spring",
-              stiffness: 80
+        <motion.div
+          className={styles.valueCard}
+          whileHover={{
+            boxShadow: `0 0 40px ${valor.color}40, inset 0 0 60px ${valor.color}10`,
+          }}
+        >
+          <motion.div
+            className={styles.iconWrapper}
+            whileHover={{
+              scale: 1.2,
+              rotate: 360,
+              transition: { duration: 0.6 },
             }}
           >
-            <h4>{valor.titulo}</h4>
-            <p>{valor.descripcion}</p>
-          </motion.li>
-        ))}
-      </ul>
+            <span
+              className={styles.icon}
+              style={{
+                textShadow: `0 0 20px ${valor.color}80, 0 0 40px ${valor.color}60`,
+              }}
+            >
+              {valor.icon}
+            </span>
+          </motion.div>
+          <motion.h4
+            className={styles.valueTitle}
+            style={{ color: valor.color }}
+            whileHover={{
+              scale: 1.05,
+              textShadow: `0 0 20px ${valor.color}, 0 0 40px ${valor.color}80`,
+            }}
+          >
+            {valor.titulo}
+          </motion.h4>
+          <p className={styles.valueDescription}>{valor.descripcion}</p>
+        </motion.div>
+      </ElectricBorder>
+    </motion.div>
+  );
+});
 
-      <motion.canvas
-        ref={canvasRef}
-        className={styles.canvasArt}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.2 }}
-        aria-hidden="true"
-      />
+ValueCard.displayName = "ValueCard";
+
+export default function Mision() {
+  return (
+    <section className={styles.mision} id="mision">
+      {/* Content */}
+      <div className={styles.content}>
+        <header className={styles.header}>
+          <ScrollFloat
+            containerClassName={styles.titleContainer}
+            textClassName={styles.title}
+            animationDuration={1.1}
+            ease="power3.out"
+            scrollStart="top 80%"
+            scrollEnd="bottom 20%"
+            stagger={0.05}
+          >
+            Nuestra Misión
+          </ScrollFloat>
+
+          <SplitText
+            text="Hacer realidad tu visión es nuestra misión."
+            className={styles.subtitle}
+            tag="h3"
+            delay={50}
+            duration={0.8}
+            ease="power3.out"
+            splitType="chars"
+            from={{ opacity: 0, y: 40, rotateX: -90 }}
+            to={{ opacity: 1, y: 0, rotateX: 0 }}
+            threshold={0.3}
+            rootMargin="-50px"
+            textAlign="center"
+          />
+        </header>
+
+        <div className={styles.descriptionWrapper}>
+          <ScrollFloat
+            containerClassName={styles.descriptionContainer}
+            textClassName={styles.description}
+            animationDuration={0.9}
+            ease="power2.out"
+            scrollStart="top 75%"
+            scrollEnd="bottom 25%"
+            stagger={0.03}
+          >
+            En ValkiriApps diseñamos soluciones digitales inteligentes, impulsadas por IA y
+            tecnología moderna, para transformar ideas en productos que impactan. Nuestra misión es
+            acompañarte en cada paso, desde la conceptualización hasta la ejecución técnica.
+          </ScrollFloat>
+        </div>
+
+        <div className={styles.values}>
+          {valores.map((valor, i) => (
+            <ValueCard key={i} valor={valor} index={i} />
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

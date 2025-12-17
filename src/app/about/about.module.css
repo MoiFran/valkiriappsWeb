@@ -1,0 +1,345 @@
+.page {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+}
+
+.hero {
+  position: relative;
+  padding: 8rem 2rem 6rem;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-bottom: 2px solid rgba(79, 194, 209, 0.3);
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(79, 194, 209, 0.3);
+  border-radius: 0.5rem;
+  color: #4fc2d1;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-bottom: 3rem;
+}
+
+.backButton:hover {
+  background: rgba(79, 194, 209, 0.1);
+  border-color: #4fc2d1;
+  transform: translateX(-4px);
+}
+
+.heroContent {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.heroTitle {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #4fc2d1 0%, #fff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+.heroTagline {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  color: #4fc2d1;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
+}
+
+.heroDescription {
+  font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.section {
+  padding: 6rem 2rem;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.storyCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid rgba(79, 194, 209, 0.2);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  text-align: center;
+  transition: all 0.4s ease;
+}
+
+.storyCard:hover {
+  background: rgba(79, 194, 209, 0.05);
+  border-color: rgba(79, 194, 209, 0.5);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(79, 194, 209, 0.2);
+}
+
+.cardIcon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 0 20px rgba(79, 194, 209, 0.5));
+}
+
+.storyCard h3 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #4fc2d1;
+  margin-bottom: 1rem;
+}
+
+.storyCard p {
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+}
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.benefitCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(79, 194, 209, 0.15);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.benefitCard:hover {
+  background: rgba(79, 194, 209, 0.05);
+  border-color: rgba(79, 194, 209, 0.4);
+  transform: translateY(-4px);
+}
+
+.benefitIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.benefitCard h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+
+.benefitCard p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+.valuesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.valueCard {
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 4px solid #4fc2d1;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.valueCard:hover {
+  background: rgba(79, 194, 209, 0.05);
+  transform: translateX(8px);
+}
+
+.valueCard h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.valueCard p {
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+}
+
+.processGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.processCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(79, 194, 209, 0.15);
+  border-radius: 1rem;
+  padding: 2rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.processCard:hover {
+  background: rgba(79, 194, 209, 0.05);
+  border-color: rgba(79, 194, 209, 0.4);
+}
+
+.processNumber {
+  font-size: 4rem;
+  font-weight: 900;
+  color: rgba(79, 194, 209, 0.3);
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.processCard h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4fc2d1;
+  margin-bottom: 1rem;
+}
+
+.processCard p {
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.processDuration {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: rgba(79, 194, 209, 0.1);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: #4fc2d1;
+  font-weight: 600;
+}
+
+.techGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.techCategory {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(79, 194, 209, 0.15);
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+.techCategory h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4fc2d1;
+  margin-bottom: 1.5rem;
+}
+
+.techList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.techList span {
+  padding: 0.5rem 1rem;
+  background: rgba(79, 194, 209, 0.1);
+  border: 1px solid rgba(79, 194, 209, 0.3);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+}
+
+.techList span:hover {
+  background: rgba(79, 194, 209, 0.2);
+  border-color: #4fc2d1;
+  transform: translateY(-2px);
+}
+
+.ctaSection {
+  padding: 6rem 2rem;
+  background: linear-gradient(135deg, rgba(79, 194, 209, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+  text-align: center;
+}
+
+.ctaTitle {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.ctaDescription {
+  font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 700px;
+  margin: 0 auto 3rem;
+}
+
+.ctaButton {
+  display: inline-block;
+  padding: 1.25rem 2.5rem;
+  background: rgba(79, 194, 209, 0.1);
+  border: 2px solid #4fc2d1;
+  border-radius: 1rem;
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  box-shadow: 0 0 30px rgba(79, 194, 209, 0.3);
+}
+
+.ctaButton:hover {
+  background: rgba(79, 194, 209, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 0 60px rgba(79, 194, 209, 0.6);
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 6rem 1.5rem 4rem;
+  }
+
+  .section {
+    padding: 4rem 1.5rem;
+  }
+
+  .grid,
+  .benefitsGrid,
+  .valuesGrid,
+  .processGrid,
+  .techGrid {
+    grid-template-columns: 1fr;
+  }
+}

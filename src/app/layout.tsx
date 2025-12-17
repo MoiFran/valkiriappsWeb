@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "@/styles/variables.css";
 import "@/styles/globals.css";
 import "@/styles/mixins.css";
-import ClientSmoothScroll from "@/components/layout/ClientSmoothScroll";
+import { LenisProvider } from "@/contexts/LenisContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,17 +20,11 @@ export const metadata: Metadata = {
   description: "Soluciones web y automatizaciones a medida",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ClientSmoothScroll>
-          {children}
-        </ClientSmoothScroll>
+        <LenisProvider>{children}</LenisProvider>
       </body>
     </html>
   );

@@ -1,0 +1,77 @@
+/* Animación de gradiente */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Wrapper para tags */
+.tagWrapper {
+  all: unset;
+  display: inline-block;
+}
+
+/* Contenedor principal */
+.container {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  max-width: fit-content;
+  border-radius: 1.25rem;
+  font-weight: 500;
+  backdrop-filter: blur(8px);
+  transition: box-shadow 0.5s;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Borde con gradiente animado */
+.borderGradient {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  z-index: 0;
+  pointer-events: none;
+  animation: gradient 8s linear infinite;
+}
+
+/* Inner del borde (crea el efecto de borde) */
+.borderInner {
+  position: absolute;
+  inset: 0;
+  background-color: #000;
+  border-radius: 1.25rem;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+/* Texto con gradiente animado */
+.gradientText {
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-size: cover;
+  animation: gradient 8s linear infinite;
+}
+
+/* Hover effects */
+.container:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}

@@ -1,0 +1,19 @@
+/* Contenedor principal */
+.container {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+}
+
+/* Texto wrapper */
+.text {
+  display: inline-block;
+  font-size: clamp(1.6rem, 4vw, 3rem);
+  line-height: 1.5;
+}
+
+/* Carácter individual */
+.char {
+  display: inline-block;
+  white-space: pre;
+}
