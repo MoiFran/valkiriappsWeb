@@ -61,7 +61,12 @@ export default function Footer() {
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand Column */}
-          <div ref={(el) => el && (columnsRef.current[0] = el)} className="lg:col-span-1">
+          <div
+            ref={(el) => {
+              if (el) columnsRef.current[0] = el;
+            }}
+            className="lg:col-span-1"
+          >
             <Link href="/" className="inline-block mb-4">
               <div className="relative w-48 h-12">
                 <Image
@@ -94,7 +99,11 @@ export default function Footer() {
           </div>
 
           {/* Services Column */}
-          <div ref={(el) => el && (columnsRef.current[1] = el)}>
+          <div
+            ref={(el) => {
+              if (el) columnsRef.current[1] = el;
+            }}
+          >
             <h3 className="text-text font-semibold mb-4">
               {homeContent.footer.links.services.title}
             </h3>
@@ -113,7 +122,11 @@ export default function Footer() {
           </div>
 
           {/* Company Column */}
-          <div ref={(el) => el && (columnsRef.current[2] = el)}>
+          <div
+            ref={(el) => {
+              if (el) columnsRef.current[2] = el;
+            }}
+          >
             <h3 className="text-text font-semibold mb-4">
               {homeContent.footer.links.company.title}
             </h3>
@@ -132,7 +145,11 @@ export default function Footer() {
           </div>
 
           {/* Legal Column */}
-          <div ref={(el) => el && (columnsRef.current[3] = el)}>
+          <div
+            ref={(el) => {
+              if (el) columnsRef.current[3] = el;
+            }}
+          >
             <h3 className="text-text font-semibold mb-4">{homeContent.footer.links.legal.title}</h3>
             <ul className="space-y-3">
               {homeContent.footer.links.legal.items.map((link) => (

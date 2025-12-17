@@ -128,9 +128,9 @@ export default function ContactForm() {
 
     if (!result.success) {
       const fieldErrors: Partial<Record<keyof ContactFormData, string>> = {};
-      result.error.errors.forEach((error) => {
-        const field = error.path[0] as keyof ContactFormData;
-        fieldErrors[field] = error.message;
+      result.error.issues.forEach((issue) => {
+        const field = issue.path[0] as keyof ContactFormData;
+        fieldErrors[field] = issue.message;
       });
       setErrors(fieldErrors);
       setStatus("idle");

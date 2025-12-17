@@ -48,7 +48,7 @@ export const demoRequestSchema = z.object({
   company: z.string().min(2, "El nombre de la empresa es obligatorio"),
   phone: z.string().optional(),
   service: z.enum(["world-web", "astrapa", "thor", "other"], {
-    errorMap: () => ({ message: "Por favor, selecciona un servicio" }),
+    message: "Por favor, selecciona un servicio",
   }),
   preferredDate: z.string().optional(),
   message: z.string().optional(),

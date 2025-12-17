@@ -2,7 +2,7 @@
 
 import React from "react";
 
-type StarBorderProps<T extends React.ElementType> = React.ComponentPropsWithoutRef<T> & {
+export type StarBorderProps<T extends React.ElementType> = React.ComponentPropsWithoutRef<T> & {
   as?: T;
   className?: string;
   children?: React.ReactNode;
