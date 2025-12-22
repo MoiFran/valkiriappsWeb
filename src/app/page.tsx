@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ClientSmoothScroll from "@/components/layout/ClientSmoothScroll";
 import Header from "@/components/layout/Header";
 import Hero from "@/components/sections/Hero";
@@ -11,29 +11,44 @@ import Footer from "@/components/marketing/Footer";
 import { SplashCursor } from "@/components/effects";
 
 export default function Home() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    // Solo activar SplashCursor en desktop (no móviles ni tablets)
+    const checkDevice = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+
+    checkDevice();
+    window.addEventListener("resize", checkDevice);
+    return () => window.removeEventListener("resize", checkDevice);
+  }, []);
+
   return (
     <ClientSmoothScroll>
-      {/* Global Rainbow Cursor Effect */}
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          pointerEvents: "none",
-          zIndex: 9999,
-        }}
-      >
-        <SplashCursor
-          SPLAT_RADIUS={0.2}
-          SPLAT_FORCE={3000}
-          COLOR_UPDATE_SPEED={6}
-          DENSITY_DISSIPATION={5}
-          VELOCITY_DISSIPATION={4}
-          TRANSPARENT={true}
-        />
-      </div>
+      {/* Global Rainbow Cursor Effect - Solo Desktop */}
+      {isDesktop && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none",
+            zIndex: 9999,
+          }}
+        >
+          <SplashCursor
+            SPLAT_RADIUS={0.2}
+            SPLAT_FORCE={3000}
+            COLOR_UPDATE_SPEED={6}
+            DENSITY_DISSIPATION={5}
+            VELOCITY_DISSIPATION={4}
+            TRANSPARENT={true}
+          />
+        </div>
+      )}
 
       <Header />
       <div className="min-h-screen bg-black text-white">

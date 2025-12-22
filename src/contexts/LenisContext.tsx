@@ -51,8 +51,8 @@ export function LenisProvider({ children }: { children: ReactNode }) {
 
     gsap.ticker.lagSmoothing(0);
 
-    // Handle anchor links
-    const handleAnchorClick = (e: MouseEvent) => {
+    // Handle anchor links (both click and touch)
+    const handleAnchorClick = (e: Event) => {
       const target = e.target as HTMLElement;
       const anchor = target.closest('a[href^="#"]') as HTMLAnchorElement;
 
@@ -79,11 +79,13 @@ export function LenisProvider({ children }: { children: ReactNode }) {
     };
 
     document.addEventListener("click", handleAnchorClick);
+    document.addEventListener("touchend", handleAnchorClick);
 
     return () => {
       lenis.destroy();
       gsap.ticker.remove((time) => lenis.raf(time * 1000));
       document.removeEventListener("click", handleAnchorClick);
+      document.removeEventListener("touchend", handleAnchorClick);
     };
   }, []);
 

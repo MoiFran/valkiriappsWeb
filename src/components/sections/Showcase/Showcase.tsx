@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -16,6 +16,18 @@ if (typeof window !== "undefined") {
 const Showcase: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    // Detectar dispositivo
+    const checkDevice = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+
+    checkDevice();
+    window.addEventListener("resize", checkDevice);
+    return () => window.removeEventListener("resize", checkDevice);
+  }, []);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -110,9 +122,9 @@ const Showcase: React.FC = () => {
               } as React.CSSProperties
             }
           >
-            {/* Background Effect */}
+            {/* Background Effect - Solo Desktop */}
             <div className={styles.cardBackground}>
-              {line.effectType === "threads" && (
+              {isDesktop && line.effectType === "threads" && (
                 <Threads amplitude={0.5} distance={0.3} enableMouseInteraction={true} />
               )}
             </div>

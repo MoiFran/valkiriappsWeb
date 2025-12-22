@@ -18,12 +18,26 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "ValkiriApps",
   description: "Soluciones web y automatizaciones a medida",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
+  themeColor: "#000000",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <head>
+        <meta name="format-detection" content="telephone=no" />
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
         <LenisProvider>{children}</LenisProvider>
       </body>
     </html>

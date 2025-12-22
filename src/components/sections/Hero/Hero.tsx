@@ -16,9 +16,18 @@ export default function Hero() {
   const wordsRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    // Solo activar efectos WebGL en desktop
+    const checkDevice = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+
+    checkDevice();
+    window.addEventListener("resize", checkDevice);
+    return () => window.removeEventListener("resize", checkDevice);
   }, []);
 
   useEffect(() => {
@@ -149,28 +158,30 @@ export default function Hero() {
 
   return (
     <section ref={heroRef} className={styles.hero}>
-      {/* Subtle Ballpit Background - Reducido para mejor legibilidad */}
-      <div className={styles.ballpitWrapper}>
-        <Ballpit
-          count={60}
-          gravity={0.12}
-          friction={0.995}
-          wallBounce={0.85}
-          followCursor={true}
-          colors={[
-            0x4fc2d1, // Primary cyan
-            0x7df9ff, // Electric blue
-          ]}
-          minSize={0.7}
-          maxSize={1.0}
-          materialParams={{
-            metalness: 0.2,
-            roughness: 0.3,
-            clearcoat: 0.6,
-            clearcoatRoughness: 0.3,
-          }}
-        />
-      </div>
+      {/* Subtle Ballpit Background - Solo Desktop */}
+      {isDesktop && (
+        <div className={styles.ballpitWrapper}>
+          <Ballpit
+            count={60}
+            gravity={0.12}
+            friction={0.995}
+            wallBounce={0.85}
+            followCursor={true}
+            colors={[
+              0x4fc2d1, // Primary cyan
+              0x7df9ff, // Electric blue
+            ]}
+            minSize={0.7}
+            maxSize={1.0}
+            materialParams={{
+              metalness: 0.2,
+              roughness: 0.3,
+              clearcoat: 0.6,
+              clearcoatRoughness: 0.3,
+            }}
+          />
+        </div>
+      )}
 
       {/* Content */}
       <div className={styles.content}>
